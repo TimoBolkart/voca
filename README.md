@@ -20,6 +20,11 @@ Install pip and virtualenv
 sudo apt-get install python-pip python-virtualenv
 ```
 
+Install ffmpeg
+```
+sudo apt install ffmpeg
+```
+
 Clone the git project:
 ```
 $ git clone https://github.com/TimoBolkart/voca.git
@@ -60,6 +65,13 @@ We provide demos i) to synthesize a character animation given an speech signal (
 This demo runs VOCA, which outputs animation sequences for audio sequences.
 ```
 python run_voca.py --tf_model_fname './model/gstep_52280.model' --ds_fname './ds_graph/output_graph.pb' --audio_fname './audio/test_sentence.wav' --template_fname './template/FLAME_sample.ply' --condition_idx 3 --out_path './animation_output'
+```
+
+##### Render sequence
+
+This demo renders the animation sequence to a video.
+```
+python visualize_sequence.py --sequence_path './animation_output' --audio_fname './audio/test_sentence.wav' --out_path './animation_visualization'
 ```
 
 ##### Sample templates
