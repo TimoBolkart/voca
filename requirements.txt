@@ -1,0 +1,9 @@
+numpy
+scipy
+chumpy
+opencv-python
+resampy
+python-speech-features
+tensorflow-gpu==1.12.0
+ipython
+
