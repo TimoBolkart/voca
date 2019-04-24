@@ -6,8 +6,8 @@ This is an official [VOCA](https://voca.is.tue.mpg.de) repository.
 
 VOCA is a simple and generic speech-driven facial animation framework that works across a range of identities. This codebase demonstrates how to synthesize realistic character animations given an arbitrary speech signal and a static character mesh. For details please see the scientific publication
 
-Capture, Learning, and Synthesis of 3D Speaking Styles. 
-D. Cudeiro*, T. Bolkart*, C. Laidlaw, A. Ranjan, M. J. Black
+Capture, Learning, and Synthesis of 3D Speaking Styles.<br/> 
+D. Cudeiro*, T. Bolkart*, C. Laidlaw, A. Ranjan, M. J. Black<br/>
 Computer Vision and Pattern Recognition (CVPR), 2019
 
 A pre-print of the publication can be found on the [project website](https://voca.is.tue.mpg.de).
@@ -47,9 +47,9 @@ Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/m
 
 ## Data
 
-Download the trained VOCA model, audio sequences, and template meshes from [MPI-IS/VOCA](https://voca.is.tue.mpg.de)
-Download FLAME model from [MPI-IS/FLAME](http://flame.is.tue.mpg.de/).
-Download DeepSpeech v0.1.0 from [Mozilla/DeepSpeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.1.0)
+Download the trained VOCA model, audio sequences, and template meshes from [MPI-IS/VOCA](https://voca.is.tue.mpg.de).<br/>
+Download FLAME model from [MPI-IS/FLAME](http://flame.is.tue.mpg.de/).<br/>
+Download DeepSpeech v0.1.0 from [Mozilla/DeepSpeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.1.0).
 
 ## Demo
 
