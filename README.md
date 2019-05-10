@@ -15,6 +15,8 @@ A pre-print of the publication can be found on the [project website](https://voc
 
 ## Set-up
 
+The code uses Python 2.7 and it was tested on Tensorflow 1.12.0.
+
 Install pip and virtualenv
 ```
 sudo apt-get install python-pip python-virtualenv
@@ -42,19 +44,19 @@ $ cd voca
 $ source <your_home_dir>/voca/bin/activate
 ```
 
-The code uses Python 2.7 and it was tested on Tensorflow 1.12.0. The requirements (including tensorflow) can be installed using:
+The requirements (including tensorflow) can be installed using:
 ```
 pip install -r requirements.txt
 ```
 
-Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/mesh).
+Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/mesh) within the virtual environment.
 
 
 ## Data
 
 Download the trained VOCA model, audio sequences, and template meshes from [MPI-IS/VOCA](https://voca.is.tue.mpg.de).<br/>
 Download FLAME model from [MPI-IS/FLAME](http://flame.is.tue.mpg.de/).<br/>
-Download DeepSpeech v0.1.0 from [Mozilla/DeepSpeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.1.0).
+Download the trained DeepSpeech model (v0.1.0) from [Mozilla/DeepSpeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.1.0) (i.e. deepspeech-0.1.0-models.tar.gz).
 
 ## Demo
 
@@ -94,6 +96,16 @@ Edit head pose:
 ```
 python edit_sequences.py --source_path './animation_output' --out_path './FLAME_variation_pose' --flame_model_path  './flame/generic_model.pkl' --mode pose --index 3 --max_variation 0.52
 ```
+
+## Known issues
+
+The [MPI-IS/mesh](https://github.com/MPI-IS/mesh) to date does not support Python 3. Due to the dependency on the mesh package, VOCA uses Python 2.7.
+
+If you get an error like
+```
+ModuleNotFoundError: No module named 'psbody'
+```
+please check if the [MPI-IS/mesh](https://github.com/MPI-IS/mesh) is successfully installed within the virtual environment.
 
 ## License
 
