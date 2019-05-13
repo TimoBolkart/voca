@@ -97,9 +97,9 @@ VOCA animates static templates in FLAME topology. Such templates can be obtained
 python sample_templates.py --flame_model_path './flame/generic_model.pkl' --num_samples 1 --out_path './template'
 ```
 
-##### Reconstruct template from iamges
+##### Reconstruct template from images
 
-[RingNet](https://github.com/soubhiksanyal/RingNet) is a framework to fully automatically reconstruct 3D meshes in FLAME topology from an image. After removing effects of pose and expression, the RingNet output mesh can be used as VOCA template. Please see the RinNet demo on how to reconstruct a 3D mesh from an image with neutralized pose and expression.
+[RingNet](https://ringnet.is.tue.mpg.de/) is a framework to fully automatically reconstruct 3D meshes in FLAME topology from an image. After removing effects of pose and expression, the RingNet output mesh can be used as VOCA template. Please see the RingNet [demo](https://github.com/soubhiksanyal/RingNet) on how to reconstruct a 3D mesh from an image with neutralized pose and expression.
 
 ## Known issues
 
