@@ -1,8 +1,8 @@
 # VOCA: Voice Operated Character Animation
 
-![Voice Operated Character Animation](https://voca.is.tue.mpg.de/uploads/ckeditor/pictures/61/VOCA_teaser.png)
-
 This is an official [VOCA](https://voca.is.tue.mpg.de) repository.
+
+![Voice Operated Character Animation](https://voca.is.tue.mpg.de/uploads/ckeditor/pictures/61/VOCA_teaser.png)
 
 VOCA is a simple and generic speech-driven facial animation framework that works across a range of identities. This codebase demonstrates how to synthesize realistic character animations given an arbitrary speech signal and a static character mesh. For details please see the scientific publication
 
@@ -14,6 +14,11 @@ Computer Vision and Pattern Recognition (CVPR), 2019
 
 A pre-print of the publication can be found on the [project website](https://voca.is.tue.mpg.de).
 
+## Video
+
+See the demo video for more details and results.
+
+[![VOCA](https://img.youtube.com/vi/XceCxf_GyW4/0.jpg)](https://youtu.be/XceCxf_GyW4)
 
 ## Set-up
 
