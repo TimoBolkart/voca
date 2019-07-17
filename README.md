@@ -86,7 +86,7 @@ FaceTalk_170811_03275_TA, FaceTalk_170908_03277_TA
 
 Test subjects:
 ```
-FaceTalk_170809_00138_TA, FaceTalk_170731_00024_TA#### 
+FaceTalk_170809_00138_TA, FaceTalk_170731_00024_TA 
 ```
 
 ## Demo
