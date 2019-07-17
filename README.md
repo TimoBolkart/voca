@@ -63,9 +63,31 @@ Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/m
 
 ## Data
 
+#### Data to run the demo 
+
 Download the trained VOCA model, audio sequences, and template meshes from [MPI-IS/VOCA](https://voca.is.tue.mpg.de).<br/>
 Download FLAME model from [MPI-IS/FLAME](http://flame.is.tue.mpg.de/).<br/>
 Download the trained DeepSpeech model (v0.1.0) from [Mozilla/DeepSpeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.1.0) (i.e. deepspeech-0.1.0-models.tar.gz).
+
+#### Data used to train VOCA
+
+VOCA is trained on VOCASET, a unique 4D face dataset with about 29 minutes of 4D scans captured at 60 fps and synchronized audio from 12 speakers that can be downloaded at [MPI-IS/VOCASET](https://voca.is.tue.mpg.de). 
+
+Training subjects:
+```
+FaceTalk_170728_03272_TA, FaceTalk_170904_00128_TA, FaceTalk_170725_00137_TA, FaceTalk_170915_00223_TA, FaceTalk_170811_03274_TA, FaceTalk_170913_03279_TA, FaceTalk_170904_03276_TA, FaceTalk_170912_03278_TA
+```
+This is also the order of the subjects for the one-hot-encoding (i.e. FaceTalk_170728_03272_TA: 0, FaceTalk_170904_00128_TA: 1, ...)
+
+Validation subjects:
+```
+FaceTalk_170811_03275_TA, FaceTalk_170908_03277_TA
+```
+
+Test subjects:
+```
+FaceTalk_170809_00138_TA, FaceTalk_170731_00024_TA#### 
+```
 
 ## Demo
 
