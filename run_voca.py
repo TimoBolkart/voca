@@ -25,7 +25,7 @@ from utils.inference import inference
 parser = argparse.ArgumentParser(description='Voice operated character animation')
 parser.add_argument('--tf_model_fname', default='./model/gstep_52280.model', help='Path to trained VOCA model')
 parser.add_argument('--ds_fname', default='./ds_graph/output_graph.pb', help='Path to trained DeepSpeech model')
-parser.add_argument('--audio_fname', default='./audio/sentence07.wav', help='Path of input speech sequence')
+parser.add_argument('--audio_fname', default='./audio/test_sentence.wav', help='Path of input speech sequence')
 parser.add_argument('--template_fname', default='./template/FLAME_sample.ply', help='Path of "zero pose" template mesh in" FLAME topology to be animated')
 parser.add_argument('--condition_idx', type=int, default=3, help='Subject condition id in [1,8]')
 parser.add_argument('--out_path', default='./voca/animation_output', help='Output path')

@@ -92,7 +92,7 @@ class AudioHandler:
         else:
             raise ValueError('Wrong type for audio')
 
-        # Load graph and place_hoders
+        # Load graph and place_holders
         with tf.gfile.GFile(self.config['deepspeech_graph_fname'], "rb") as f:
             graph_def = tf.GraphDef()
             graph_def.ParseFromString(f.read())
@@ -110,7 +110,7 @@ class AudioHandler:
         with tf.Session(graph=graph) as sess:
             for subj in audio.keys():
                 for seq in audio[subj].keys():
-                    print 'process %s - %s' % (subj, seq)
+                    print 'process audio: %s - %s' % (subj, seq)
 
                     audio_sample = audio[subj][seq]['audio']
                     sample_rate = audio[subj][seq]['sample_rate']

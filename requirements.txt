@@ -4,7 +4,8 @@ chumpy
 opencv-python
 resampy
 python-speech-features
-tensorflow-gpu==1.12.0
+tensorflow-gpu==1.15.0
+opendr==0.77
 image
 ipython
 

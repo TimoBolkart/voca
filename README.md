@@ -132,6 +132,21 @@ python sample_templates.py --flame_model_path './flame/generic_model.pkl' --num_
 
 [RingNet](https://ringnet.is.tue.mpg.de/) is a framework to fully automatically reconstruct 3D meshes in FLAME topology from an image. After removing effects of pose and expression, the RingNet output mesh can be used as VOCA template. Please see the RingNet [demo](https://github.com/soubhiksanyal/RingNet) on how to reconstruct a 3D mesh from an image with neutralized pose and expression.
 
+#### Training
+
+We provide code to train a VOCA model. Prior to training, run the VOCA output demo, as the training shares the requirements.
+Additionally, download the VOCA training data from [MPI-IS/VOCA](https://voca.is.tue.mpg.de).<br/>
+
+The training code requires a config file containing all model training parameters. To create a config file, run
+```
+python config_parser.py
+```
+
+To start training, run
+```
+python run_training.py
+```
+
 ## Known issues
 
 The [MPI-IS/mesh](https://github.com/MPI-IS/mesh) to date does not support Python 3. Due to the dependency on the mesh package, VOCA uses Python 2.7.
