@@ -24,7 +24,7 @@ See the demo video for more details and results.
 
 ## Set-up
 
-The code uses Python 2.7 and it was tested on Tensorflow 1.12.0.
+The code uses Python 2.7 and it was tested on Tensorflow 1.15.0.
 
 Install pip and virtualenv
 ```
@@ -58,8 +58,8 @@ The requirements (including tensorflow) can be installed using:
 pip install -r requirements.txt
 ```
 
-Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/mesh) within the virtual environment.
-
+Install mesh processing libraries from [MPI-IS/mesh (fork)](https://github.com/TimoBolkart/mesh) within the virtual environment.
+The original mesh package [MPI-IS/mesh](https://github.com/MPI-IS/mesh) converted to Python 3.5+ which is not compatible with Python 2.7 code anymore.
 
 ## Data
 
@@ -91,7 +91,10 @@ FaceTalk_170809_00138_TA, FaceTalk_170731_00024_TA
 
 ## Demo
 
-We provide demos i) to synthesize a character animation given an speech signal (VOCA), ii) to alter identity dependent face shape and head pose of an animation sequence using FLAME, and iii) to generate templates (e.g. by sampling the [FLAME](http://flame.is.tue.mpg.de/) identity shape space, or by reconstructing a template from an image using [RingNet](https://github.com/soubhiksanyal/RingNet) that can be animated with VOCA. 
+We provide demos to
+1) synthesize a character animation given an speech signal (VOCA),
+2) alter identity dependent face shape and head pose of an animation sequence using FLAME, and
+3) generate templates (e.g. by sampling the [FLAME](http://flame.is.tue.mpg.de/) identity shape space, or by reconstructing a template from an image using [RingNet](https://github.com/soubhiksanyal/RingNet) that can be animated with VOCA.
 
 ##### VOCA output
 
@@ -132,7 +135,7 @@ python sample_templates.py --flame_model_path './flame/generic_model.pkl' --num_
 
 [RingNet](https://ringnet.is.tue.mpg.de/) is a framework to fully automatically reconstruct 3D meshes in FLAME topology from an image. After removing effects of pose and expression, the RingNet output mesh can be used as VOCA template. Please see the RingNet [demo](https://github.com/soubhiksanyal/RingNet) on how to reconstruct a 3D mesh from an image with neutralized pose and expression.
 
-#### Training
+## Training
 
 We provide code to train a VOCA model. Prior to training, run the VOCA output demo, as the training shares the requirements.
 Additionally, download the VOCA training data from [MPI-IS/VOCA](https://voca.is.tue.mpg.de).<br/>
@@ -149,13 +152,11 @@ python run_training.py
 
 ## Known issues
 
-The [MPI-IS/mesh](https://github.com/MPI-IS/mesh) to date does not support Python 3. Due to the dependency on the mesh package, VOCA uses Python 2.7.
-
 If you get an error like
 ```
 ModuleNotFoundError: No module named 'psbody'
 ```
-please check if the [MPI-IS/mesh](https://github.com/MPI-IS/mesh) is successfully installed within the virtual environment.
+please check if the [MPI-IS/mesh (fork)](https://github.com/TimoBolkart/mesh) is successfully installed within the virtual environment.
 
 ## License
 

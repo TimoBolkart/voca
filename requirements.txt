@@ -6,6 +6,7 @@ resampy
 python-speech-features
 tensorflow-gpu==1.15.0
 opendr==0.77
+scikit-learn
 image
 ipython
 
