@@ -23,30 +23,30 @@ Modules included:
 __all__ = ['load_model', 'save_model']
 
 import numpy as np
-import cPickle as pickle
+import _pickle as pickle
 import chumpy as ch
 from chumpy.ch import MatVecMult
-from posemapper import posemap
-from verts import verts_core
+from smpl_webuser.posemapper import posemap
+from smpl_webuser.verts import verts_core
     
-def save_model(model, fname):
-    m0 = model
-    trainer_dict = {'v_template': np.asarray(m0.v_template),'J': np.asarray(m0.J),'weights': np.asarray(m0.weights),'kintree_table': m0.kintree_table,'f': m0.f, 'bs_type': m0.bs_type, 'posedirs': np.asarray(m0.posedirs)}    
-    if hasattr(model, 'J_regressor'):
-        trainer_dict['J_regressor'] = m0.J_regressor
-    if hasattr(model, 'J_regressor_prior'):
-        trainer_dict['J_regressor_prior'] = m0.J_regressor_prior
-    if hasattr(model, 'weights_prior'):
-        trainer_dict['weights_prior'] = m0.weights_prior
-    if hasattr(model, 'shapedirs'):
-        trainer_dict['shapedirs'] = m0.shapedirs
-    if hasattr(model, 'vert_sym_idxs'):
-        trainer_dict['vert_sym_idxs'] = m0.vert_sym_idxs
-    if hasattr(model, 'bs_style'):
-        trainer_dict['bs_style'] = model.bs_style
-    else:
-        trainer_dict['bs_style'] = 'lbs'
-    pickle.dump(trainer_dict, open(fname, 'w'), -1)
+# def save_model(model, fname):
+#     m0 = model
+#     trainer_dict = {'v_template': np.asarray(m0.v_template),'J': np.asarray(m0.J),'weights': np.asarray(m0.weights),'kintree_table': m0.kintree_table,'f': m0.f, 'bs_type': m0.bs_type, 'posedirs': np.asarray(m0.posedirs)}
+#     if hasattr(model, 'J_regressor'):
+#         trainer_dict['J_regressor'] = m0.J_regressor
+#     if hasattr(model, 'J_regressor_prior'):
+#         trainer_dict['J_regressor_prior'] = m0.J_regressor_prior
+#     if hasattr(model, 'weights_prior'):
+#         trainer_dict['weights_prior'] = m0.weights_prior
+#     if hasattr(model, 'shapedirs'):
+#         trainer_dict['shapedirs'] = m0.shapedirs
+#     if hasattr(model, 'vert_sym_idxs'):
+#         trainer_dict['vert_sym_idxs'] = m0.vert_sym_idxs
+#     if hasattr(model, 'bs_style'):
+#         trainer_dict['bs_style'] = model.bs_style
+#     else:
+#         trainer_dict['bs_style'] = 'lbs'
+#     pickle.dump(trainer_dict, open(fname, 'w'), -1)
 
 
 def backwards_compatibility_replacements(dd):
@@ -77,7 +77,7 @@ def backwards_compatibility_replacements(dd):
 def ready_arguments(fname_or_dict):
 
     if not isinstance(fname_or_dict, dict):
-        dd = pickle.load(open(fname_or_dict))
+        dd = pickle.load(open(fname_or_dict, 'rb'), encoding='latin1')
     else:
         dd = fname_or_dict
         

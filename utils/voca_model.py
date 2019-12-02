@@ -21,8 +21,8 @@ import os
 import sys
 import logging
 import tempfile
-from subprocess import call
 import threading
+from subprocess import call
 
 import numpy as np
 import tensorflow as tf
@@ -181,8 +181,8 @@ class VOCAModel(BaseModel):
 
     def train(self):
         num_train_batches = self.batcher.get_num_batches(self.config['batch_size'])
-        for epoch in xrange(1, self.config['epoch_num']+1):
-            for iter in xrange(num_train_batches):
+        for epoch in range(1, self.config['epoch_num']+1):
+            for iter in range(num_train_batches):
                 loss, g_step, summary, g_lr = self._training_step()
                 if iter % 50 == 0:
                     logging.warning("Epoch: %d | Iter: %d | Global Step: %d | Loss: %.6f | Learning Rate: %.6f" % (epoch, iter, g_step, loss, g_lr))
@@ -200,7 +200,6 @@ class VOCAModel(BaseModel):
                                        , data_specifier='training')
                 self._render_sequences(out_folder=os.path.join(self.config['checkpoint_dir'], 'videos', 'validation_epoch_%d_iter_%d' % (epoch, iter))
                                        , data_specifier='validation')
-        self._finish()
 
     def _training_step(self):
         processed_audio, vertices, templates, subject_idx = self.batcher.get_training_batch(self.config['batch_size'])
@@ -233,8 +232,11 @@ class VOCAModel(BaseModel):
     def _render_sequences(self, out_folder, run_in_parallel=True, data_specifier='validation'):
         print('Render %s sequences' % data_specifier)
         if run_in_parallel:
-            self.threads.append(threading.Thread(target=self._render_helper, args=(out_folder, data_specifier)))
-            self.threads[-1].start()
+            # self.threads.append(threading.Thread(target=self._render_helper, args=(out_folder, data_specifier)))
+            # self.threads[-1].start()
+            thread = threading.Thread(target=self._render_helper, args=(out_folder, data_specifier))
+            thread.start()
+            thread.join()
         else:
             self._render_helper(out_folder, data_specifier)
 
@@ -267,7 +269,7 @@ class VOCAModel(BaseModel):
         def add_image_text(img, text):
             font = cv2.FONT_HERSHEY_SIMPLEX
             textsize = cv2.getTextSize(text, font, 1, 2)[0]
-            textX = (img.shape[1] - textsize[0]) / 2
+            textX = (img.shape[1] - textsize[0]) // 2
             textY = textsize[1] + 10
             cv2.putText(img, '%s' % (text), (textX, textY), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
@@ -278,11 +280,9 @@ class VOCAModel(BaseModel):
         tmp_video_file = tempfile.NamedTemporaryFile('w', suffix='.mp4', dir=os.path.dirname(video_fname))
         if int(cv2.__version__[0]) < 3:
             print('cv2 < 3')
-            # writer = cv2.VideoWriter(tmp_video_file.name, cv2.cv.CV_FOURCC(*'DIVX'), 60, (4000, 800), True)
             writer = cv2.VideoWriter(tmp_video_file.name, cv2.cv.CV_FOURCC(*'mp4v'), 60, (1600, 800), True)
         else:
             print('cv2 >= 3')
-            # writer = cv2.VideoWriter(tmp_video_file.name, cv2.VideoWriter_fourcc(*'DIVX'), 60, (4000, 800), True)
             writer = cv2.VideoWriter(tmp_video_file.name, cv2.VideoWriter_fourcc(*'mp4v'), 60, (1600, 800), True)
 
         feed_dict = {self.speech_features: np.expand_dims(np.stack(seq_processed_audio), -1),

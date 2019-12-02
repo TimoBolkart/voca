@@ -113,15 +113,15 @@ def alter_sequence_head_pose(source_path, out_path, flame_model_fname, pose_idx=
     model_parms = np.zeros((num_frames, model.pose.shape[0]))
 
     # Generate interpolated pose parameters for each frame
-    x1, y1 = [0, num_frames/4], [0, rot_angle]
-    x2, y2 = [num_frames/4, num_frames/2], [rot_angle, 0]
-    x3, y3 = [num_frames/2, 3*num_frames/4], [0, -rot_angle]
-    x4, y4 = [3*num_frames/4, num_frames], [-rot_angle, 0]
+    x1, y1 = [0, num_frames//4], [0, rot_angle]
+    x2, y2 = [num_frames//4, num_frames//2], [rot_angle, 0]
+    x3, y3 = [num_frames//2, 3*num_frames//4], [0, -rot_angle]
+    x4, y4 = [3*num_frames//4, num_frames], [-rot_angle, 0]
 
-    xsteps1 = np.arange(0, num_frames/4)
-    xsteps2 = np.arange(num_frames/4, num_frames/2)
-    xsteps3 = np.arange(num_frames/2, 3*num_frames/4)
-    xsteps4 = np.arange(3*num_frames/4, num_frames)
+    xsteps1 = np.arange(0, num_frames//4)
+    xsteps2 = np.arange(num_frames//4, num_frames/2)
+    xsteps3 = np.arange(num_frames//2, 3*num_frames//4)
+    xsteps4 = np.arange(3*num_frames//4, num_frames)
 
     model_parms[:, pose_idx] = np.hstack((np.interp(xsteps1, x1, y1),
                                    np.interp(xsteps2, x2, y2),

@@ -84,7 +84,3 @@ class BaseModel(object):
                 logging.warning("Loading model %s - this will screw up the epoch number during training" % ckpt_name)
             else:
                 logging.waring("Failed loading model")
-
-    def _finish(self):
-        for t in self.threads:
-            t.join()

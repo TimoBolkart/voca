@@ -24,7 +24,7 @@ See the demo video for more details and results.
 
 ## Set-up
 
-The code uses Python 2.7 and it was tested on Tensorflow 1.15.0.
+The code uses Python 3.6.8 and it was tested on Tensorflow 1.14.0.
 
 Install pip and virtualenv
 ```
@@ -44,7 +44,7 @@ $ git clone https://github.com/TimoBolkart/voca.git
 Set up virtual environment:
 ```
 $ mkdir <your_home_dir>/.virtualenvs
-$ virtualenv --no-site-packages <your_home_dir>/.virtualenvs/voca
+$ python3 -m venv <your_home_dir>/.virtualenvs/voca
 ```
 
 Activate virtual environment:
@@ -58,8 +58,7 @@ The requirements (including tensorflow) can be installed using:
 pip install -r requirements.txt
 ```
 
-Install mesh processing libraries from [MPI-IS/mesh (fork)](https://github.com/TimoBolkart/mesh) within the virtual environment.
-The original mesh package [MPI-IS/mesh](https://github.com/MPI-IS/mesh) converted to Python 3.5+ which is not compatible with Python 2.7 code anymore.
+Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/mesh) within the virtual environment.
 
 ## Data
 
@@ -98,16 +97,9 @@ We provide demos to
 
 ##### VOCA output
 
-This demo runs VOCA, which outputs animation sequences for audio sequences.
+This demo runs VOCA, which outputs the animation meshes given audio sequences, and renders the animation sequence to a video.
 ```
 python run_voca.py --tf_model_fname './model/gstep_52280.model' --ds_fname './ds_graph/output_graph.pb' --audio_fname './audio/test_sentence.wav' --template_fname './template/FLAME_sample.ply' --condition_idx 3 --out_path './animation_output'
-```
-
-##### Render sequence
-
-This demo renders the animation sequence to a video.
-```
-python visualize_sequence.py --sequence_path './animation_output' --audio_fname './audio/test_sentence.wav' --out_path './animation_visualization'
 ```
 
 ##### Edit VOCA output
@@ -116,12 +108,20 @@ VOCA outputs meshes in FLAME topology. This demo shows how to use FLAME to edit 
 
 Edit identity-dependent shape:
 ```
-python edit_sequences.py --source_path './animation_output' --out_path './FLAME_variation_shape' --flame_model_path  './flame/generic_model.pkl' --mode shape --index 0 --max_variation 3
+python edit_sequences.py --source_path './animation_output/meshes' --out_path './FLAME_variation_shape' --flame_model_path  './flame/generic_model.pkl' --mode shape --index 0 --max_variation 3
 ```
 
 Edit head pose:
 ```
-python edit_sequences.py --source_path './animation_output' --out_path './FLAME_variation_pose' --flame_model_path  './flame/generic_model.pkl' --mode pose --index 3 --max_variation 0.52
+python edit_sequences.py --source_path './animation_output/meshes' --out_path './FLAME_variation_pose' --flame_model_path  './flame/generic_model.pkl' --mode pose --index 3 --max_variation 0.52
+```
+
+##### Render sequence
+
+This demo renders an animation sequence to a video.
+```
+python visualize_sequence.py --sequence_path './FLAME_variation_shape/meshes' --audio_fname './audio/test_sentence.wav' --out_path './FLAME_variation_shape'
+python visualize_sequence.py --sequence_path './FLAME_variation_pose/meshes' --audio_fname './audio/test_sentence.wav' --out_path './FLAME_variation_pose'
 ```
 
 ##### Sample template
@@ -156,7 +156,7 @@ If you get an error like
 ```
 ModuleNotFoundError: No module named 'psbody'
 ```
-please check if the [MPI-IS/mesh (fork)](https://github.com/TimoBolkart/mesh) is successfully installed within the virtual environment.
+please check if the [MPI-IS/mesh](https://github.com/MPI-IS/mesh) is successfully installed within the virtual environment.
 
 ## License
 

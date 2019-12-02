@@ -17,15 +17,17 @@ For comments or questions, please email us at voca@tue.mpg.de
 
 
 import os
+import cv2
+import scipy
+import tempfile
 import numpy as np
 import tensorflow as tf
-
-import scipy
+from subprocess import call
 from scipy.io import wavfile
 
-from audio_handler import  AudioHandler
 from psbody.mesh import Mesh
-
+from utils.audio_handler import  AudioHandler
+from utils.rendering import render_mesh_helper
 
 def process_audio(ds_path, audio, sample_rate):
     config = {}
@@ -42,16 +44,40 @@ def process_audio(ds_path, audio, sample_rate):
 
 
 def output_sequence_meshes(sequence_vertices, template, out_path):
-    if not os.path.exists(out_path):
-        os.makedirs(out_path)
+    mesh_out_path = os.path.join(out_path, 'meshes')
+    if not os.path.exists(mesh_out_path):
+        os.makedirs(mesh_out_path)
 
     num_frames = sequence_vertices.shape[0]
     for i_frame in range(num_frames):
-        out_fname = os.path.join(out_path, '%05d.obj' % i_frame)
+        out_fname = os.path.join(mesh_out_path, '%05d.obj' % i_frame)
         Mesh(sequence_vertices[i_frame], template.f).write_obj(out_fname)
 
 
-def inference(tf_model_fname, ds_fname, audio_fname, template_fname, condition_idx, out_path):
+def render_sequence_meshes(audio_fname, sequence_vertices, template, out_path):
+    if not os.path.exists(out_path):
+        os.makedirs(out_path)
+
+    tmp_video_file = tempfile.NamedTemporaryFile('w', suffix='.mp4', dir=out_path)
+    if int(cv2.__version__[0]) < 3:
+        writer = cv2.VideoWriter(tmp_video_file.name, cv2.cv.CV_FOURCC(*'mp4v'), 60, (800, 800), True)
+    else:
+        writer = cv2.VideoWriter(tmp_video_file.name, cv2.VideoWriter_fourcc(*'mp4v'), 60, (800, 800), True)
+
+    num_frames = sequence_vertices.shape[0]
+    center = np.mean(sequence_vertices[0], axis=0)
+    for i_frame in range(num_frames):
+        img = render_mesh_helper(Mesh(sequence_vertices[i_frame], template.f), center)
+        writer.write(img)
+    writer.release()
+
+    video_fname = os.path.join(out_path, 'video.mp4')
+    cmd = ('ffmpeg' + ' -i {0} -i {1} -vcodec h264 -ac 2 -channel_layout stereo -pix_fmt yuv420p {2}'.format(
+        audio_fname, tmp_video_file.name, video_fname)).split()
+    call(cmd)
+
+
+def inference(tf_model_fname, ds_fname, audio_fname, template_fname, condition_idx, out_path, render_sequence=True):
     template = Mesh(filename=template_fname)
 
     sample_rate, audio = wavfile.read(audio_fname)
@@ -82,7 +108,8 @@ def inference(tf_model_fname, ds_fname, audio_fname, template_fname, condition_i
         saver.restore(session, tf_model_fname)
         predicted_vertices = np.squeeze(session.run(output_decoder, feed_dict))
         output_sequence_meshes(predicted_vertices, template, out_path)
-
+        if(render_sequence):
+            render_sequence_meshes(audio_fname, predicted_vertices, template, out_path)
     tf.reset_default_graph()
 
 
