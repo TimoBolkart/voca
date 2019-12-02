@@ -20,7 +20,7 @@ import stat
 import glob
 import shutil
 import subprocess
-import ConfigParser
+import configparser
 import tensorflow as tf
 
 from config_parser import read_config, create_default_config
@@ -39,7 +39,7 @@ def main():
         print('Config not found %s' % init_config_fname)
         create_default_config(init_config_fname)
 
-    config = ConfigParser.RawConfigParser()
+    config = configparser.ConfigParser()
     config.read(init_config_fname)
 
     # Path to cache the processed audio
@@ -48,7 +48,7 @@ def main():
     checkpoint_dir = config.get('Input Output', 'checkpoint_dir')
     if os.path.exists(checkpoint_dir):
         print('Checkpoint dir already exists %s' % checkpoint_dir)
-        key = raw_input('Press "q" to quit, "x" to erase existing folder, and any other key to continue training: ')
+        key = input('Press "q" to quit, "x" to erase existing folder, and any other key to continue training: ')
         if key.lower() == 'q':
             return
         elif key.lower() == 'x':
@@ -64,7 +64,7 @@ def main():
     if os.path.exists(config_fname):
         print('Use existing config %s' % config_fname)
     else:
-        with open(config_fname, 'wb') as fp:
+        with open(config_fname, 'w') as fp:
             config.write(fp)
             fp.close()
 

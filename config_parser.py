@@ -16,7 +16,7 @@ For comments or questions, please email us at voca@tue.mpg.de
 '''
 
 import os
-import ConfigParser
+import configparser
 
 def set_default_paramters(config):
     config.add_section('Input Output')
@@ -33,25 +33,25 @@ def set_default_paramters(config):
 
     #Audio paramters
     config.add_section('Audio Parameters')
-    config.set('Audio Parameters', 'audio_feature_type', 'deepspeech')      # deepspeech
-    config.set('Audio Parameters', 'num_audio_features', 29)                # 29
-    config.set('Audio Parameters', 'audio_window_size', 16)                 # 16
-    config.set('Audio Parameters', 'audio_window_stride', 1)                # 1
-    config.set('Audio Parameters', 'condition_speech_features', True)       # True
-    config.set('Audio Parameters', 'speech_encoder_size_factor', 1.0)       # 1
+    config.set('Audio Parameters', 'audio_feature_type', 'deepspeech')       # deepspeech
+    config.set('Audio Parameters', 'num_audio_features', '29')               # 29
+    config.set('Audio Parameters', 'audio_window_size', '16')                # 16
+    config.set('Audio Parameters', 'audio_window_stride', '1')               # 1
+    config.set('Audio Parameters', 'condition_speech_features', 'True')      # True
+    config.set('Audio Parameters', 'speech_encoder_size_factor', '1.0')      # 1
 
     # Model paramters
     config.add_section('Model Parameters')
-    config.set('Model Parameters', 'num_vertices', 5023)                    # 5023
-    config.set('Model Parameters', 'expression_dim', 50)                    # 50
-    config.set('Model Parameters', 'init_expression', True)                 # True
+    config.set('Model Parameters', 'num_vertices', '5023')                    # 5023
+    config.set('Model Parameters', 'expression_dim', '50')                    # 50
+    config.set('Model Parameters', 'init_expression', 'True')                 # True
 
     # Number of consecutive frames that are regressed in the same batch (must be >=2 if velocity is used)
-    config.set('Model Parameters', 'num_consecutive_frames', 2)             # 2
-    config.set('Model Parameters', 'absolute_reconstruction_loss', False)   # False
-    config.set('Model Parameters', 'velocity_weight', 10.0)                 # 10.0
-    config.set('Model Parameters', 'acceleration_weight', 0.0)              # 0.0
-    config.set('Model Parameters', 'verts_regularizer_weight', 0.0)         # 0.0
+    config.set('Model Parameters', 'num_consecutive_frames', '2')             # 2
+    config.set('Model Parameters', 'absolute_reconstruction_loss', 'False')   # False
+    config.set('Model Parameters', 'velocity_weight', '10.0')                 # 10.0
+    config.set('Model Parameters', 'acceleration_weight', '0.0')              # 0.0
+    config.set('Model Parameters', 'verts_regularizer_weight', '0.0')         # 0.0
 
     config.add_section('Data Setup')
     config.set('Data Setup', 'subject_for_training',
@@ -72,21 +72,21 @@ def set_default_paramters(config):
                 "sentence31 sentence32 sentence33 sentence34 sentence35 sentence36 sentence37 sentence38 sentence39 sentence40")
 
     config.add_section('Learning Parameters')
-    config.set('Learning Parameters', 'batch_size', 64)                     # 64
-    config.set('Learning Parameters', 'learning_rate', 1e-4)                # 1e-4
-    config.set('Learning Parameters', 'decay_rate', 1.0)                    # 1.0
-    config.set('Learning Parameters', 'epoch_num', 100)                     # 100
-    config.set('Learning Parameters', 'adam_beta1_value', 0.9)              # 0.9
+    config.set('Learning Parameters', 'batch_size', '64')                     # 64
+    config.set('Learning Parameters', 'learning_rate', '1e-4')                # 1e-4
+    config.set('Learning Parameters', 'decay_rate', '1.0')                    # 1.0
+    config.set('Learning Parameters', 'epoch_num', '100')                     # 100
+    config.set('Learning Parameters', 'adam_beta1_value', '0.9')              # 0.9
 
     config.add_section('Visualization Parameters')
-    config.set('Visualization Parameters', 'num_render_sequences', 3)
+    config.set('Visualization Parameters', 'num_render_sequences', '3')
 
 
 def create_default_config(fname):
-    config = ConfigParser.RawConfigParser()
+    config = configparser.ConfigParser()
     set_default_paramters(config)
 
-    with open(fname, 'wb') as configfile:
+    with open(fname, 'w') as configfile:
         config.write(configfile)
         configfile.close()
 
@@ -95,7 +95,7 @@ def read_config(fname):
         print('Config not found %s' % fname)
         return
 
-    config = ConfigParser.RawConfigParser()
+    config = configparser.RawConfigParser()
     config.read(fname)
 
     config_parms = {}
