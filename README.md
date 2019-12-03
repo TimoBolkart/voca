@@ -150,6 +150,12 @@ To start training, run
 python run_training.py
 ```
 
+To visualize the training progress, run
+```
+tensorboard --logdir='./training/summaries/' --port 6006
+```
+This generates a [link](http://localhost:6006/) on the command line.  Open the link with a web browser to show the visualization.
+
 ## Known issues
 
 If you get an error like
