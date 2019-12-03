@@ -82,7 +82,7 @@ def render_mesh_helper(mesh, t_center, rot=np.zeros(3), v_colors=None, errors=No
                             [0, 0, 1, 1],
                             [0, 0, 0, 1]])
 
-    angle = np.pi / 6
+    angle = np.pi / 6.0
     pos = camera_pose[:3,3]
     light_color = np.array([1., 1., 1.])
     light = pyrender.PointLight(color=light_color, intensity=intensity)

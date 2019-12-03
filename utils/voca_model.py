@@ -157,7 +157,7 @@ class VOCAModel(BaseModel):
 
     def _init_training(self):
         self.global_step = tf.Variable(0, name='global_step', trainable=False)
-        decay_steps = self.batcher.get_training_size()/self.config['batch_size']
+        decay_steps = self.batcher.get_training_size()//self.config['batch_size']
         decay_rate = self.config['decay_rate']
         if decay_rate < 1:
             self.global_learning_rate = tf.train.exponential_decay(self.config['learning_rate'], self.global_step,

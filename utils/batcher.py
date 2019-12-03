@@ -85,7 +85,7 @@ class Batcher:
             return self.data_handler.slice_data(list(np.random.choice(self.test_indices, size=batch_size)))
 
     def get_num_batches(self, batch_size):
-        return int(float(len(self.training_indices)) / float(batch_size))
+        return int(len(self.training_indices) / batch_size)
 
     def get_training_sequences_in_order(self, num_of_sequences):
         return self.data_handler.get_training_sequences(num_of_sequences)
