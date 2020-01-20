@@ -29,7 +29,7 @@ The code uses Python 3.6.8 and it was tested on Tensorflow 1.14.0.
 
 Install pip and virtualenv
 ```
-sudo apt-get install python-pip python-virtualenv
+sudo apt-get install python3-pip python3-venv
 ```
 
 Install ffmpeg
