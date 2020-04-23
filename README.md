@@ -112,11 +112,11 @@ python run_voca.py --tf_model_fname './model/gstep_52280.model' --ds_fname './ds
 
 VOCA outputs meshes in FLAME topology in "zero pose". This allows to edit the output sequences by varying the FLAME model parameters. These demos shows how to use FLAME to add eye blinks, edit the identity dependent face shape, or head pose of a VOCA animation sequence.
 
-Add eye blinks:
+Add eye blinks (FLAME2019 only):
 ```
 python edit_sequences.py --source_path './animation_output/meshes' --out_path './FLAME_eye_blink' --flame_model_path  './flame/generic_model.pkl' --mode blink --num_blinks 2 --blink_duration 15
 ```
-Please not that this only demonstrates how to use FLAME to manipulate the eyelids to blink. The output motion does not resemble a true eye blink.
+Please not that this only demonstrates how to use FLAME to manipulate the eyelids to blink. The output motion does not resemble a true eye blink. This demo works with the FLAME2019 model only.
 
 Edit identity-dependent shape:
 ```
