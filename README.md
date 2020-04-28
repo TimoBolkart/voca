@@ -107,6 +107,8 @@ This demo runs VOCA, which outputs the animation meshes given audio sequences, a
 ```
 python run_voca.py --tf_model_fname './model/gstep_52280.model' --ds_fname './ds_graph/output_graph.pb' --audio_fname './audio/test_sentence.wav' --template_fname './template/FLAME_sample.ply' --condition_idx 3 --out_path './animation_output'
 ```
+By default, running the demo uses pyrender to render the sequence to a video, however this causes problems for certain configurations (e.g. if running the code remotely). In this case try running the demo with an additional flag ```
+--visualize False``` to disable the visualization. The animated meshes are then still stored to the output directory and can be viewed or rendered with another tool.
 
 ##### Edit VOCA output
 
