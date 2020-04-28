@@ -221,11 +221,11 @@ class VOCAModel(BaseModel):
         conditions = np.reshape(np.repeat(np.arange(num_training_subjects)[:,np.newaxis],
                                           repeats=self.config['num_consecutive_frames']*self.config['batch_size'], axis=-1), [-1,])
 
-        feed_dict = {self.speech_features: np.expand_dims(np.repeat(processed_audio, repeats=num_training_subjects, axis=0), -1),
+        feed_dict = {self.speech_features: np.expand_dims(np.tile(processed_audio, (num_training_subjects, 1, 1)), -1),
                     self.condition_subject_id: conditions,
                     self.is_training: False,
-                    self.input_template: np.expand_dims(np.repeat(templates, repeats=num_training_subjects, axis=0), -1),
-                    self.target_vertices: np.expand_dims(np.repeat(vertices, repeats=num_training_subjects, axis=0), -1)}
+                    self.input_template: np.expand_dims(np.tile(templates, (num_training_subjects, 1, 1)), -1),
+                    self.target_vertices: np.expand_dims(np.tile(vertices, (num_training_subjects, 1, 1)), -1)}
         loss, summary = self.session.run([self.loss, self.validation_summary], feed_dict)
         return loss, summary
 
