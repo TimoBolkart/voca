@@ -104,7 +104,11 @@ def render_mesh_helper(mesh, t_center, rot=np.zeros(3), v_colors=None, errors=No
     scene.add(light, pose=light_pose.copy())
 
     flags = pyrender.RenderFlags.SKIP_CULL_FACES
-    r = pyrender.OffscreenRenderer(viewport_width=frustum['width'], viewport_height=frustum['height'])
-    color, _ = r.render(scene, flags=flags)
+    try:
+        r = pyrender.OffscreenRenderer(viewport_width=frustum['width'], viewport_height=frustum['height'])
+        color, _ = r.render(scene, flags=flags)
+    except:
+        print('pyrender: Failed rendering frame')
+        color = np.zeros((frustum['height'], frustum['width'], 3), dtype='uint8')
 
     return color[..., ::-1]

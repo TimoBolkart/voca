@@ -21,6 +21,15 @@ import glob
 import argparse
 from utils.inference import inference
 
+def str2bool(val):
+    if isinstance(val, bool):
+        return val
+    elif isinstance(val, str):
+        if val.lower() in ['true', 't', 'yes', 'y']:
+            return True
+        elif val.lower() in ['false', 'f', 'no', 'n']:
+            return False
+    return False
 
 parser = argparse.ArgumentParser(description='Voice operated character animation')
 parser.add_argument('--tf_model_fname', default='./model/gstep_52280.model', help='Path to trained VOCA model')
@@ -29,6 +38,7 @@ parser.add_argument('--audio_fname', default='./audio/test_sentence.wav', help='
 parser.add_argument('--template_fname', default='./template/FLAME_sample.ply', help='Path of "zero pose" template mesh in" FLAME topology to be animated')
 parser.add_argument('--condition_idx', type=int, default=3, help='Subject condition id in [1,8]')
 parser.add_argument('--out_path', default='./voca/animation_output', help='Output path')
+parser.add_argument('--visualize', default='True', help='Visualize animation')
 
 args = parser.parse_args()
 tf_model_fname = args.tf_model_fname
@@ -41,5 +51,5 @@ out_path = args.out_path
 if not os.path.exists(out_path):
     os.makedirs(out_path)
 
-inference(tf_model_fname, ds_fname, audio_fname, template_fname, condition_idx, out_path)
+inference(tf_model_fname, ds_fname, audio_fname, template_fname, condition_idx, out_path, str2bool(args.visualize))
 
