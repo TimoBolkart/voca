@@ -108,7 +108,7 @@ This demo runs VOCA, which outputs the animation meshes given audio sequences, a
 python run_voca.py --tf_model_fname './model/gstep_52280.model' --ds_fname './ds_graph/output_graph.pb' --audio_fname './audio/test_sentence.wav' --template_fname './template/FLAME_sample.ply' --condition_idx 3 --out_path './animation_output'
 ```
 
-To run VOCA and visualize the meshes with a pre-defined texture, run:
+To run VOCA and visualize the meshes with a pre-defined texture (obtained by fitting FLAME to an image using [TF_FLAME](https://github.com/TimoBolkart/TF_FLAME)), run:
 ```
 python run_voca.py --tf_model_fname './model/gstep_52280.model' --ds_fname './ds_graph/output_graph.pb' --audio_fname './audio/test_sentence.wav' --template_fname './template/FLAME_sample.ply' --condition_idx 3 --uv_template_fname './template/texture_mesh.obj' --texture_img_fname './template/texture_mesh.png' --out_path './animation_output_textured'
 ```
