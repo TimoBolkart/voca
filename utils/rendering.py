@@ -16,7 +16,8 @@ For comments or questions, please email us at voca@tue.mpg.de
 '''
 
 from __future__ import division
-
+import os
+os.environ['PYOPENGL_PLATFORM'] = 'egl' # Uncommnet this line while running remotely
 import cv2
 import pyrender
 import trimesh
