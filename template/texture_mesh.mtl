@@ -1,0 +1,8 @@
+newmtl texture_mesh
+ka 0.329412 0.223529 0.027451
+kd 0.780392 0.568627 0.113725
+ks 0.992157 0.941176 0.807843
+illum 0
+map_Ka texture_mesh.png
+map_Kd texture_mesh.png
+map_Ks texture_mesh.png

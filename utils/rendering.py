@@ -21,6 +21,7 @@ os.environ['PYOPENGL_PLATFORM'] = 'egl' # Uncommnet this line while running remo
 import cv2
 import pyrender
 import trimesh
+import tempfile
 import numpy as np
 import matplotlib as mpl
 import matplotlib.cm as cm
@@ -36,7 +37,7 @@ def get_unit_factor(unit):
     else:
         raise ValueError('Unit not supported')
 
-def render_mesh_helper(mesh, t_center, rot=np.zeros(3), v_colors=None, errors=None, error_unit='m', min_dist_in_mm=0.0, max_dist_in_mm=3.0, z_offset=0):
+def render_mesh_helper(mesh, t_center, rot=np.zeros(3), tex_img=None, v_colors=None, errors=None, error_unit='m', min_dist_in_mm=0.0, max_dist_in_mm=3.0, z_offset=0):
     camera_params = {'c': np.array([400, 400]),
                      'k': np.array([-0.19816071, 0.92822711, 0, 0, 0]),
                      'f': np.array([4754.97941935 / 2, 4754.97941935 / 2])}
@@ -46,7 +47,22 @@ def render_mesh_helper(mesh, t_center, rot=np.zeros(3), v_colors=None, errors=No
     mesh_copy = Mesh(mesh.v, mesh.f)
     mesh_copy.v[:] = cv2.Rodrigues(rot)[0].dot((mesh_copy.v-t_center).T).T+t_center
 
-    if errors is not None:
+    texture_rendering = tex_img is not None and hasattr(mesh, 'vt') and hasattr(mesh, 'ft')
+    if texture_rendering:
+        intensity = 0.5
+        tex = pyrender.Texture(source=tex_img, source_channels='RGB') 
+        material = pyrender.material.MetallicRoughnessMaterial(baseColorTexture=tex)
+
+        # Workaround as pyrender requires number of vertices and uv coordinates to be the same
+        temp_filename = '%s.obj' % next(tempfile._get_candidate_names())
+        mesh.write_obj(temp_filename)
+        tri_mesh = trimesh.load(temp_filename, process=False)
+        try:
+            os.remove(temp_filename)
+        except:
+            print('Failed deleting temporary file - %s' % temp_filename)
+        render_mesh = pyrender.Mesh.from_trimesh(tri_mesh, material=material)
+    elif errors is not None:
         intensity = 0.5
         unit_factor = get_unit_factor('mm')/get_unit_factor(error_unit)
         errors = unit_factor*errors
@@ -63,8 +79,9 @@ def render_mesh_helper(mesh, t_center, rot=np.zeros(3), v_colors=None, errors=No
         intensity = 1.5
         rgb_per_v = None
 
-    tri_mesh = trimesh.Trimesh(vertices=mesh_copy.v, faces=mesh_copy.f, vertex_colors=rgb_per_v)
-    render_mesh = pyrender.Mesh.from_trimesh(tri_mesh, smooth=True)
+    if not texture_rendering:
+        tri_mesh = trimesh.Trimesh(vertices=mesh_copy.v, faces=mesh_copy.f, vertex_colors=rgb_per_v)
+        render_mesh = pyrender.Mesh.from_trimesh(tri_mesh, smooth=True)
 
     scene = pyrender.Scene(ambient_light=[.2, .2, .2], bg_color=[255, 255, 255])
     camera = pyrender.IntrinsicsCamera(fx=camera_params['f'][0],

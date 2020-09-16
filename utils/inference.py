@@ -43,18 +43,28 @@ def process_audio(ds_path, audio, sample_rate):
     return audio_handler.process(tmp_audio)['subj']['seq']['audio']
 
 
-def output_sequence_meshes(sequence_vertices, template, out_path):
+def output_sequence_meshes(sequence_vertices, template, out_path, uv_template_fname='', texture_img_fname=''):
     mesh_out_path = os.path.join(out_path, 'meshes')
     if not os.path.exists(mesh_out_path):
         os.makedirs(mesh_out_path)
 
+    if os.path.exists(uv_template_fname):
+        uv_template = Mesh(filename=uv_template_fname)
+        vt, ft = uv_template.vt, uv_template.ft
+    else:
+        vt, ft = None, None
+
     num_frames = sequence_vertices.shape[0]
     for i_frame in range(num_frames):
         out_fname = os.path.join(mesh_out_path, '%05d.obj' % i_frame)
-        Mesh(sequence_vertices[i_frame], template.f).write_obj(out_fname)
+        out_mesh = Mesh(sequence_vertices[i_frame], template.f)
+        if vt is not None and ft is not None:
+            out_mesh.vt, out_mesh.ft = vt, ft
+        if os.path.exists(texture_img_fname):
+            out_mesh.set_texture_image(texture_img_fname)
+        out_mesh.write_obj(out_fname)
 
-
-def render_sequence_meshes(audio_fname, sequence_vertices, template, out_path):
+def render_sequence_meshes(audio_fname, sequence_vertices, template, out_path, uv_template_fname='', texture_img_fname=''):
     if not os.path.exists(out_path):
         os.makedirs(out_path)
 
@@ -64,10 +74,21 @@ def render_sequence_meshes(audio_fname, sequence_vertices, template, out_path):
     else:
         writer = cv2.VideoWriter(tmp_video_file.name, cv2.VideoWriter_fourcc(*'mp4v'), 60, (800, 800), True)
 
+    if os.path.exists(uv_template_fname) and os.path.exists(texture_img_fname):
+        uv_template = Mesh(filename=uv_template_fname)
+        vt, ft = uv_template.vt, uv_template.ft
+        tex_img = cv2.imread(texture_img_fname)[:,:,::-1]
+    else:
+        vt, ft = None, None
+        tex_img = None
+
     num_frames = sequence_vertices.shape[0]
     center = np.mean(sequence_vertices[0], axis=0)
     for i_frame in range(num_frames):
-        img = render_mesh_helper(Mesh(sequence_vertices[i_frame], template.f), center)
+        render_mesh = Mesh(sequence_vertices[i_frame], template.f)
+        if vt is not None and ft is not None:
+            render_mesh.vt, render_mesh.ft = vt, ft
+        img = render_mesh_helper(render_mesh, center, tex_img=tex_img)
         writer.write(img)
     writer.release()
 
@@ -77,7 +98,7 @@ def render_sequence_meshes(audio_fname, sequence_vertices, template, out_path):
     call(cmd)
 
 
-def inference(tf_model_fname, ds_fname, audio_fname, template_fname, condition_idx, out_path, render_sequence=True):
+def inference(tf_model_fname, ds_fname, audio_fname, template_fname, condition_idx, out_path, render_sequence=True, uv_template_fname='', texture_img_fname=''):
     template = Mesh(filename=template_fname)
 
     sample_rate, audio = wavfile.read(audio_fname)
@@ -109,7 +130,7 @@ def inference(tf_model_fname, ds_fname, audio_fname, template_fname, condition_i
         predicted_vertices = np.squeeze(session.run(output_decoder, feed_dict))
         output_sequence_meshes(predicted_vertices, template, out_path)
         if(render_sequence):
-            render_sequence_meshes(audio_fname, predicted_vertices, template, out_path)
+            render_sequence_meshes(audio_fname, predicted_vertices, template, out_path, uv_template_fname, texture_img_fname)
     tf.reset_default_graph()
 
 
