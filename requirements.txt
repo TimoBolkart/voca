@@ -4,7 +4,7 @@ chumpy
 opencv-python
 resampy
 python-speech-features
-tensorflow-gpu==1.15.2
+tensorflow-gpu==1.15.4
 scikit-learn
 image
 ipython
