@@ -145,6 +145,20 @@ python visualize_sequence.py --sequence_path './FLAME_variation_pose/meshes' --a
 ```
 To visualize the sequences with a pre-defined texture, additionally specify the flags ```--uv_template_fname``` and ```--texture_img_fname``` as done for the run_voca demo.
 
+##### Compute FLAME parameters
+
+VOCA outputs meshes in FLAME topology in "zero pose". This demo shows how to get the FLAME paramters for a VOCA output sequence. 
+```
+python compute_FLAME_params.py --source_path './animation_output/meshes' --params_fname './FLAME_parameters/params.npy' --flame_model_path  './flame/generic_model.pkl' --template_fname './template/FLAME_sample.ply' 
+```
+The ```--template_fname``` must specify the template provided to VOCA to generate the sequence. 
+
+To reconstruct back the FLAME meshes from the FLAME sequence paramters:
+```
+python compute_FLAME_params.py --params_fname './FLAME_parameters/params.npy' --flame_model_path  './flame/generic_model.pkl' --out_path './FLAME_parameters/meshes' 
+```
+
+
 ##### Sample template
 
 VOCA animates static templates in FLAME topology. Such templates can be obtained by fitting FLAME to scans, images, or by sampling the FLAME shape space. This demo randomly samples the FLAME identity shape space to generate new templates.
