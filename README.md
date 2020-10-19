@@ -147,13 +147,13 @@ To visualize the sequences with a pre-defined texture, additionally specify the 
 
 ##### Compute FLAME parameters
 
-VOCA outputs meshes in FLAME topology in "zero pose". This demo shows how to get the FLAME paramters for a VOCA output sequence. 
+VOCA outputs meshes in FLAME topology in "zero pose". This demo shows how to compute the FLAME paramters for such a sequence. 
 ```
 python compute_FLAME_params.py --source_path './animation_output/meshes' --params_fname './FLAME_parameters/params.npy' --flame_model_path  './flame/generic_model.pkl' --template_fname './template/FLAME_sample.ply' 
 ```
 The ```--template_fname``` must specify the template provided to VOCA to generate the sequence. 
 
-To reconstruct back the FLAME meshes from the FLAME sequence paramters:
+To reconstruct the FLAME meshes from the sequence paramters back:
 ```
 python compute_FLAME_params.py --params_fname './FLAME_parameters/params.npy' --flame_model_path  './flame/generic_model.pkl' --out_path './FLAME_parameters/meshes' 
 ```
