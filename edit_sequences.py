@@ -33,13 +33,17 @@ parser.add_argument('--index', type=int, default=0, help='parameter to be varied
 parser.add_argument('--max_variation', type=float, default=1.0, help='maximum variation')
 parser.add_argument('--num_blinks', type=int, default=1, help='number of eye blinks')
 parser.add_argument('--blink_duration', type=int, default=15, help='blink_duration')
+parser.add_argument('--uv_template_fname', default='', help='Path of a FLAME template with UV coordinates')
+parser.add_argument('--texture_img_fname', default='', help='Path of the texture image')
 
 args = parser.parse_args()
 source_path = args.source_path
 out_path = args.out_path
 flame_model_fname = args.flame_model_path
+uv_template_fname = args.uv_template_fname
+texture_img_fname = args.texture_img_fname
 
-def add_eye_blink(source_path, out_path, flame_model_fname, num_blinks, blink_duration):
+def add_eye_blink(source_path, out_path, flame_model_fname, num_blinks, blink_duration, uv_template_fname='', texture_img_fname=''):
     '''
     Load existing animation sequence in "zero pose" and add eye blinks over time
     :param source_path:         path of the animation sequence (files must be provided in OBJ file format)
@@ -102,10 +106,10 @@ def add_eye_blink(source_path, out_path, flame_model_fname, num_blinks, blink_du
         model.betas[300:] = weights[frame_idx]*blink_exp_betas
         predicted_vertices[frame_idx] = model.r
 
-    output_sequence_meshes(predicted_vertices, Mesh(model.v_template, model.f), out_path)
+    output_sequence_meshes(predicted_vertices, Mesh(model.v_template, model.f), out_path, uv_template_fname=uv_template_fname, texture_img_fname=texture_img_fname)
 
 
-def alter_sequence_shape(source_path, out_path, flame_model_fname, pc_idx=0, pc_range=(0,3)):
+def alter_sequence_shape(source_path, out_path, flame_model_fname, pc_idx=0, pc_range=(0,3), uv_template_fname='', texture_img_fname=''):
     '''
     Load existing animation sequence in "zero pose" and change the identity dependent shape over time.
     :param source_path:         path of the animation sequence (files must be provided in OBJ file format)
@@ -150,9 +154,9 @@ def alter_sequence_shape(source_path, out_path, flame_model_fname, pc_idx=0, pc_
         model.betas[:300] = model_parms[frame_idx]
         predicted_vertices[frame_idx] = model.r
 
-    output_sequence_meshes(predicted_vertices, Mesh(model.v_template, model.f), out_path)
+    output_sequence_meshes(predicted_vertices, Mesh(model.v_template, model.f), out_path, uv_template_fname=uv_template_fname, texture_img_fname=texture_img_fname)
 
-def alter_sequence_head_pose(source_path, out_path, flame_model_fname, pose_idx=3, rot_angle=np.pi/6):
+def alter_sequence_head_pose(source_path, out_path, flame_model_fname, pose_idx=3, rot_angle=np.pi/6, uv_template_fname='', texture_img_fname=''):
     '''
     Load existing animation sequence in "zero pose" and change the head pose (i.e. rotation around the neck) over time.
     :param source_path:         path of the animation sequence (files must be provided in OBJ file format)
@@ -203,19 +207,19 @@ def alter_sequence_head_pose(source_path, out_path, flame_model_fname, pose_idx=
         model.pose[:] = model_parms[frame_idx]
         predicted_vertices[frame_idx] = model.r
 
-    output_sequence_meshes(predicted_vertices, Mesh(model.v_template, model.f), out_path)
+    output_sequence_meshes(predicted_vertices, Mesh(model.v_template, model.f), out_path, uv_template_fname=uv_template_fname, texture_img_fname=texture_img_fname)
 
 if(args.mode == 'shape'):
     pc_idx = args.index
     pc_range = (0, args.max_variation)
-    alter_sequence_shape(source_path, out_path, flame_model_fname, pc_idx=pc_idx, pc_range=pc_range)
+    alter_sequence_shape(source_path, out_path, flame_model_fname, pc_idx=pc_idx, pc_range=pc_range, uv_template_fname=uv_template_fname, texture_img_fname=texture_img_fname)
 elif(args.mode == 'pose'):
     pose_idx = args.index
     rot_angle = args.max_variation
-    alter_sequence_head_pose(source_path, out_path, flame_model_fname, pose_idx=pose_idx, rot_angle=rot_angle)
+    alter_sequence_head_pose(source_path, out_path, flame_model_fname, pose_idx=pose_idx, rot_angle=rot_angle, uv_template_fname=uv_template_fname, texture_img_fname=texture_img_fname)
 elif(args.mode == 'blink'):
     num_blinks = args.num_blinks
     blink_duration = args.blink_duration
-    add_eye_blink(source_path, out_path, flame_model_fname, num_blinks, blink_duration)
+    add_eye_blink(source_path, out_path, flame_model_fname, num_blinks, blink_duration, uv_template_fname=uv_template_fname, texture_img_fname=texture_img_fname)
 else:
     print('Unknown mode')

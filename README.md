@@ -113,8 +113,7 @@ To run VOCA and visualize the meshes with a pre-defined texture (obtained by fit
 python run_voca.py --tf_model_fname './model/gstep_52280.model' --ds_fname './ds_graph/output_graph.pb' --audio_fname './audio/test_sentence.wav' --template_fname './template/FLAME_sample.ply' --condition_idx 3 --uv_template_fname './template/texture_mesh.obj' --texture_img_fname './template/texture_mesh.png' --out_path './animation_output_textured'
 ```
 
-By default, running the demo uses pyrender to render the sequence to a video, however this causes problems for certain configurations (e.g. if running the code remotely). In this case try running the demo with an additional flag ```
---visualize False``` to disable the visualization. The animated meshes are then still stored to the output directory and can be viewed or rendered with another tool.
+By default, running the demo uses pyrender to render the sequence to a video, however this causes problems for certain configurations (e.g. if running the code remotely). In this case try running the demo with an additional flag ```--visualize False``` to disable the visualization. The animated meshes are then still stored to the output directory and can be viewed or rendered with another tool.
 
 ##### Edit VOCA output
 
@@ -144,6 +143,7 @@ python visualize_sequence.py --sequence_path './FLAME_eye_blink/meshes' --audio_
 python visualize_sequence.py --sequence_path './FLAME_variation_shape/meshes' --audio_fname './audio/test_sentence.wav' --out_path './FLAME_variation_shape'
 python visualize_sequence.py --sequence_path './FLAME_variation_pose/meshes' --audio_fname './audio/test_sentence.wav' --out_path './FLAME_variation_pose'
 ```
+To visualize the sequences with a pre-defined texture, additionally specify the flags ```--uv_template_fname``` and ```--texture_img_fname``` as done for the run_voca demo.
 
 ##### Sample template
 

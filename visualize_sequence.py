@@ -28,12 +28,15 @@ parser = argparse.ArgumentParser(description='Sequence visualization')
 parser.add_argument('--sequence_path', default='./animation_output', help='Path to motion sequence')
 parser.add_argument('--audio_fname', default='', help='Path of speech sequence')
 parser.add_argument('--out_path', default='./animation_visualization', help='Output path')
-
+parser.add_argument('--uv_template_fname', default='', help='Path of a FLAME template with UV coordinates')
+parser.add_argument('--texture_img_fname', default='', help='Path of the texture image')
 
 args = parser.parse_args()
 sequence_path = args.sequence_path
 audio_fname = args.audio_fname
 out_path = args.out_path
+uv_template_fname = args.uv_template_fname
+texture_img_fname = args.texture_img_fname
 
 sequence_fnames = sorted(glob.glob(os.path.join(sequence_path, '*.obj')))
 if len(sequence_fnames) == 0:
@@ -48,4 +51,4 @@ for frame_idx, mesh_fname in enumerate(sequence_fnames):
         f = frame.f
 template = Mesh(sequence_vertices[0], f)
 sequence_vertices = np.stack(sequence_vertices)
-render_sequence_meshes(audio_fname, sequence_vertices, template, out_path)
+render_sequence_meshes(audio_fname, sequence_vertices, template, out_path, uv_template_fname=uv_template_fname, texture_img_fname=texture_img_fname)
