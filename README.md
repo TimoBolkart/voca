@@ -39,19 +39,19 @@ sudo apt install ffmpeg
 
 Clone the git project:
 ```
-$ git clone https://github.com/TimoBolkart/voca.git
+git clone https://github.com/TimoBolkart/voca.git
 ```
 
 Set up virtual environment:
 ```
-$ mkdir <your_home_dir>/.virtualenvs
-$ python3 -m venv <your_home_dir>/.virtualenvs/voca
+mkdir <your_home_dir>/.virtualenvs
+python3 -m venv <your_home_dir>/.virtualenvs/voca
 ```
 
 Activate virtual environment:
 ```
-$ cd voca
-$ source <your_home_dir>/voca/bin/activate
+cd voca
+source <your_home_dir>/voca/bin/activate
 ```
 
 Make sure your pip version is up-to-date:
