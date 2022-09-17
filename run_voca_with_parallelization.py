@@ -13,6 +13,8 @@ All rights reserved.
 
 More information about VOCA is available at http://voca.is.tue.mpg.de.
 For comments or questions, please email us at voca@tue.mpg.de
+
+code updated by Wiam Boumaazi, wboumaazi@gmail.com
 '''
 
 
