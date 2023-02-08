@@ -16,6 +16,7 @@ Computer Vision and Pattern Recognition (CVPR), 2019
 
 A pre-print of the publication can be found [here](
 https://ps.is.tuebingen.mpg.de/uploads_file/attachment/attachment/510/paper_final.pdf).
+You can also check out the [VOCA Blender Addon](https://github.com/SasageyoOrg/voca-blender)
 
 ## Video
 
