@@ -202,7 +202,7 @@ please check if the [MPI-IS/mesh](https://github.com/MPI-IS/mesh) is successfull
 
 ## License
 
-Free for non-commercial and scientific research purposes. By using this code, you acknowledge that you have read the license terms (https://voca.is.tue.mpg.de/license), understand them, and agree to be bound by them. If you do not agree with these terms and conditions, you must not use the code.
+Free for non-commercial and scientific research purposes. By using this code, you acknowledge that you have read the license terms (https://voca.is.tue.mpg.de/license.html), understand them, and agree to be bound by them. If you do not agree with these terms and conditions, you must not use the code.
 
 
 ## Referencing VOCA
