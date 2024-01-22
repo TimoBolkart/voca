@@ -122,8 +122,8 @@ class AudioHandler:
 
                     # Resample network output from 50 fps to 60 fps
                     audio_len_s = float(audio_sample.shape[0]) / sample_rate
-                    num_frames = int(round(audio_len_s * 60))
-                    network_output = interpolate_features(network_output[:, 0], 50, 60,
+                    num_frames = int(round(audio_len_s * 24))
+                    network_output = interpolate_features(network_output[:, 0], 50, 24,
                                                           output_len=num_frames)
 
                     # Make windows
