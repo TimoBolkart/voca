@@ -37,9 +37,9 @@ def reconstruction_loss(predicted, real, want_absolute_loss=True, want_in_mm=Fal
 def wing_reconstruction_loss(predicted, real):
     pass
 
-def edge_reconstruction_loss(predicted, real, num_vertices, mesh_f, want_absolute_loss=True):
-    from tfbody.mesh.utils import get_vertices_per_edge
-    vpe = get_vertices_per_edge(num_vertices, mesh_f)
+def edge_reconstruction_loss(predicted, real, mesh_f, want_absolute_loss=True):
+    from psbody.mesh.topology import connectivity
+    vpe = connectivity.get_vertices_per_edge(mesh_f)
     edges_for = lambda x: tf.gather(x, vpe[:, 0], axis=1) - tf.gather(x, vpe[:, 1], axis=1)
     if want_absolute_loss:
         return tf.reduce_mean(tf.reduce_sum(tf.abs(tf.subtract(edges_for(predicted), edges_for(real))), axis=2))

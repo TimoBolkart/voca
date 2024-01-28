@@ -11,4 +11,5 @@ ipython
 matplotlib
 trimesh
 pyrender
+pysox
 
