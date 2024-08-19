@@ -46,7 +46,7 @@ git clone https://github.com/TimoBolkart/voca.git
 Set up virtual environment:
 ```
 mkdir <your_home_dir>/.virtualenvs
-python3 -m venv <your_home_dir>/.virtualenvs/voca
+python3.7 -m venv <your_home_dir>/.virtualenvs/voca
 ```
 
 Activate virtual environment:
@@ -55,9 +55,9 @@ cd voca
 source <your_home_dir>/voca/bin/activate
 ```
 
-Make sure your pip version is up-to-date:
+Set the right pip version:
 ```
-pip install -U pip
+pip install -U pip==22.0.4
 ```
 
 The requirements (including tensorflow) can be installed using:
