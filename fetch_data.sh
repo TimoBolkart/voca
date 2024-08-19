@@ -3,6 +3,8 @@
 # Fetch DeepSpeech
 echo -e "\nDownloading DeepSpeech..."
 wget -P ./ds_graph https://github.com/mozilla/DeepSpeech/releases/download/v0.1.0/deepspeech-0.1.0-models.tar.gz
+tar -xf ./ds_graph/deepspeech-0.1.0-models.tar.gz -C ./ds_graph
+cp -r ./ds_graph/models/* ./ds_graph
 echo -e "\nDeepSpeech downloaded."
 
 
