@@ -60,12 +60,12 @@ Set the right pip version:
 pip install -U pip==22.0.4
 ```
 
-The requirements (including tensorflow) can be installed using:
+Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/mesh) within the virtual environment.
+
+Finally, the requirements (including tensorflow) can be installed using:
 ```
 pip install -r requirements.txt
 ```
-
-Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/mesh) within the virtual environment.
 
 ## Data
 
@@ -74,6 +74,11 @@ Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/m
 Download the trained VOCA model, audio sequences, and template meshes from [MPI-IS/VOCA](https://voca.is.tue.mpg.de).<br/>
 Download FLAME model from [MPI-IS/FLAME](http://flame.is.tue.mpg.de/).<br/>
 Download the trained DeepSpeech model (v0.1.0) from [Mozilla/DeepSpeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.1.0) (i.e. deepspeech-0.1.0-models.tar.gz).
+
+To download and prepare these data, run:
+```
+./fetch_data.sh
+```
 
 #### Data used to train VOCA
 
