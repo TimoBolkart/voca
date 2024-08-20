@@ -76,7 +76,7 @@ def render_mesh_helper(mesh, t_center, rot=np.zeros(3), tex_img=None, v_colors=N
         intensity = 0.5
         rgb_per_v = v_colors
     else:
-        intensity = 1.5
+        intensity = 5.0
         rgb_per_v = None
 
     if not texture_rendering:
@@ -107,18 +107,6 @@ def render_mesh_helper(mesh, t_center, rot=np.zeros(3), tex_img=None, v_colors=N
 
     light_pose = np.eye(4)
     light_pose[:3,3] = pos
-    scene.add(light, pose=light_pose.copy())
-
-    light_pose[:3,3] = cv2.Rodrigues(np.array([angle, 0, 0]))[0].dot(pos)
-    scene.add(light, pose=light_pose.copy())
-
-    light_pose[:3,3] =  cv2.Rodrigues(np.array([-angle, 0, 0]))[0].dot(pos)
-    scene.add(light, pose=light_pose.copy())
-
-    light_pose[:3,3] = cv2.Rodrigues(np.array([0, -angle, 0]))[0].dot(pos)
-    scene.add(light, pose=light_pose.copy())
-
-    light_pose[:3,3] = cv2.Rodrigues(np.array([0, angle, 0]))[0].dot(pos)
     scene.add(light, pose=light_pose.copy())
 
     flags = pyrender.RenderFlags.SKIP_CULL_FACES
