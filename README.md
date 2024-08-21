@@ -176,6 +176,24 @@ python sample_templates.py --flame_model_path './flame/generic_model.pkl' --num_
 
 [RingNet](https://ringnet.is.tue.mpg.de/) is a framework to fully automatically reconstruct 3D meshes in FLAME topology from an image. After removing effects of pose and expression, the RingNet output mesh can be used as VOCA template. Please see the RingNet [demo](https://github.com/soubhiksanyal/RingNet) on how to reconstruct a 3D mesh from an image with neutralized pose and expression.
 
+## Run VOCA with parallelization
+We optimized VOCA with a parallelization method to reduce the latency of the DeepSpeech phase.
+Our parallelization technique relies on dividing the input audio into chunks and then applying data parralelization and multiprocessing to run the DeepSpeech phase with multiple processes in parallel. 
+
+to run VOCA with parallelization:
+first you need to install pydub library:
+```
+pip install pydub
+```
+runs VOCA, which outputs the animation meshes given audio sequences, and renders the animation sequence to a video:
+
+```
+python run_voca_with_parallelization.py --tf_model_fname './model/gstep_52280.model' --ds_fname './ds_graph/output_graph.pb' --audio_fname './audio/test_sentence.wav' --template_fname './template/FLAME_sample.ply' --condition_idx 3 --out_path './animation_output_with_parallelization' --number_processes 4
+```
+The number of processes is set to 4. If you would like to change to number of processes you need to uncomment/comment lines in part1,2,3 and 4 in the file utils/inference_multiprocessing.py 
+
+if you have any question regarding this section, please send an email to this address: wboumaazi@gmail.com 
+
 ## Training
 
 We provide code to train a VOCA model. Prior to training, run the VOCA output demo, as the training shares the requirements.
